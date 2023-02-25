@@ -9,7 +9,6 @@ use Framework\App\Middlewares\CurrentTimeMiddleware;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
 final class CatalogHandler
 {

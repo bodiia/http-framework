@@ -5,21 +5,13 @@ declare(strict_types=1);
 namespace Framework\Http\Pipeline;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
 final class MiddlewareResolver
 {
-    public function resolve(mixed $handler): MiddlewareInterface|RequestHandlerInterface|callable
+    public function resolve(mixed $handler): callable
     {
         if (is_array($handler)) {
-            $middlewares = new Pipeline();
-
-            foreach ($handler as $middleware) {
-                $middlewares->pipe($this->resolve($middleware));
-            }
-
-            return $middlewares;
+            return $this->createPipe($handler);
         }
 
         if (is_string($handler)) {
@@ -29,5 +21,14 @@ final class MiddlewareResolver
         }
 
         return $handler;
+    }
+
+    public function createPipe(array $handlers): Pipeline
+    {
+        $pipeline = new Pipeline();
+        foreach ($handlers as $handler) {
+            $pipeline->pipe($this->resolve($handler));
+        }
+        return $pipeline;
     }
 }
