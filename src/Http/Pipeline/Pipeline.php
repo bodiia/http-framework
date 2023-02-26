@@ -27,9 +27,11 @@ final class Pipeline implements MiddlewareInterface
             return $handler->handle($request);
         }
 
-        $next = new class($this->process(...), $handler) implements RequestHandlerInterface {
-            public function __construct(private readonly \Closure $process, private readonly RequestHandlerInterface $handler)
-            {
+        $next = new class ($this->process(...), $handler) implements RequestHandlerInterface {
+            public function __construct(
+                private readonly \Closure $process,
+                private readonly RequestHandlerInterface $handler
+            ) {
             }
 
             public function handle(ServerRequestInterface $request): ResponseInterface

@@ -21,8 +21,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $aura = new RouterContainer();
 $routes = $aura->getMap();
 
-$routes->get('home.index', '/', [HomeHandler::class]);
-$routes->get('catalog.index', '/catalog', [CatalogHandler::class]);
+$routes->get('home.index', '/', HomeHandler::class);
+$routes->get('catalog.index', '/catalog', CatalogHandler::class);
 
 $router = new AuraRouterAdapter($aura);
 $resolver = new MiddlewareResolver();

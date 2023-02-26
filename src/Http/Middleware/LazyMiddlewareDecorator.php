@@ -18,6 +18,6 @@ final class LazyMiddlewareDecorator implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        return $this->resolver->resolve(new $this->handler)->process($request, $handler);
+        return $this->resolver->resolve(new $this->handler())->process($request, $handler);
     }
 }
