@@ -9,25 +9,35 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-final class Pipeline
+final class Pipeline implements MiddlewareInterface
 {
+    /** @param MiddlewareInterface[] $middlewares */
     public function __construct(private array $middlewares = [])
     {
     }
 
-    public function __invoke(ServerRequestInterface $request, callable $handler): ResponseInterface
-    {
-        if (! $current = array_shift($this->middlewares)) {
-            return $handler($request);
-        }
-
-        return $current($request, function (ServerRequestInterface $request) use ($handler) {
-            return $this($request, $handler);
-        });
-    }
-
-    public function pipe($middleware): void
+    public function pipe(MiddlewareInterface $middleware): void
     {
         $this->middlewares[] = $middleware;
+    }
+
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        if (! $current = array_shift($this->middlewares)) {
+            return $handler->handle($request);
+        }
+
+        $next = new class($this->process(...), $handler) implements RequestHandlerInterface {
+            public function __construct(private readonly \Closure $process, private readonly RequestHandlerInterface $handler)
+            {
+            }
+
+            public function handle(ServerRequestInterface $request): ResponseInterface
+            {
+                return ($this->process)($request, $this->handler);
+            }
+        };
+
+        return $current->process($request, $next);
     }
 }

@@ -9,10 +9,11 @@ use Framework\App\Middlewares\CurrentTimeMiddleware;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-final class HomeHandler
+final class HomeHandler implements RequestHandlerInterface
 {
-    public function __invoke(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new HtmlResponse(sprintf(
             'Home | %s | %s',

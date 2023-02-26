@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Framework\App\Middlewares;
 
-use Framework\Http\Middleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-final class CredentialsMiddleware
+final class CredentialsMiddleware implements MiddlewareInterface
 {
     public const ATTRIBUTE = 'X-Developer';
 
-    public function __invoke(ServerRequestInterface $request, callable $next): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        return $next($request->withAttribute('X-Developer', 'Bodianskii'));
+        return $handler->handle($request->withAttribute('X-Developer', 'Bodianskii'));
     }
 }

@@ -18,9 +18,9 @@ final class Application
     ) {
     }
 
-    public function handleRequest(ServerRequestInterface $request, callable $default): ResponseInterface
+    public function handleRequest(ServerRequestInterface $request, RequestHandlerInterface $default): ResponseInterface
     {
-        return ($this->pipeline)($request, $default);
+        return $this->pipeline->process($request, $default);
     }
 
     public function pipe(mixed $handler): void

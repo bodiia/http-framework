@@ -9,23 +9,25 @@ use Framework\Http\Router\Exceptions\RouteNotMatchedException;
 use Framework\Http\Router\Result;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-final class RouteMiddleware
+final class RouteMiddleware implements MiddlewareInterface
 {
     public function __construct(private readonly AuraRouterAdapter $router)
     {
     }
 
-    public function __invoke(ServerRequestInterface $request, callable $next): ResponseInterface
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         try {
             $route = $this->router->match($request);
             foreach ($route->getAttributes() as $attribute => $value) {
                 $request = $request->withAttribute($attribute, $value);
             }
-            return $next($request->withAttribute(Result::class, $route));
+            return $handler->handle($request->withAttribute(Result::class, $route));
         } catch (RouteNotMatchedException) {
-            return $next($request);
+            return $handler->handle($request);
         }
     }
 }
