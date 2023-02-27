@@ -8,6 +8,7 @@ use Framework\App\Application;
 use Framework\App\Middlewares\CredentialsMiddleware;
 use Framework\App\Middlewares\CurrentTimeMiddleware;
 use Framework\App\Middlewares\ErrorHandlerMiddleware;
+use Framework\Http\Container\Container;
 use Framework\Http\Middleware\DispatchMiddleware;
 use Framework\Http\Middleware\RouteMiddleware;
 use Framework\Http\Pipeline\MiddlewareResolver;
@@ -17,6 +18,8 @@ use Laminas\Diactoros\ServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+
+$container = new Container();
 
 $aura = new RouterContainer();
 $routes = $aura->getMap();

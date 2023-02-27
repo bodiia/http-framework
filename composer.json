@@ -26,6 +26,8 @@
   },
   "scripts": {
     "serve": "php -S localhost:8000 -t ./public",
-    "test": "phpunit --colors=always"
+    "test": "phpunit --colors=always",
+    "phpcs": "php ./vendor/bin/phpcs --standard=PSR12 ./src",
+    "phpcs-fix": "php ./vendor/bin/phpcbf ./src"
   }
 }
