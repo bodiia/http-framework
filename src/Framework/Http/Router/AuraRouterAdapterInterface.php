@@ -8,7 +8,7 @@ use Framework\Http\Router\Exceptions\RouteNotFoundException;
 use Framework\Http\Router\Exceptions\RouteNotMatchedException;
 use Psr\Http\Message\ServerRequestInterface;
 
-class AuraRouterAdapter implements Router
+class AuraRouterAdapterInterface implements RouterInterface
 {
     public function __construct(private readonly RouterContainer $router)
     {

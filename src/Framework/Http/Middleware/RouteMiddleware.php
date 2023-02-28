@@ -6,7 +6,7 @@ namespace Framework\Http\Middleware;
 
 use Framework\Http\Router\Exceptions\RouteNotMatchedException;
 use Framework\Http\Router\Result;
-use Framework\Http\Router\Router;
+use Framework\Http\Router\RouterInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -14,7 +14,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class RouteMiddleware implements MiddlewareInterface
 {
-    public function __construct(private readonly Router $router)
+    public function __construct(private readonly RouterInterface $router)
     {
     }
 

@@ -6,7 +6,7 @@ use Framework\Http\Router\Exceptions\RouteNotFoundException;
 use Framework\Http\Router\Exceptions\RouteNotMatchedException;
 use Psr\Http\Message\ServerRequestInterface;
 
-interface Router
+interface RouterInterface
 {
     /**
      * @throws RouteNotMatchedException
