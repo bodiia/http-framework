@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Framework\Http\Middleware;
 
 use Framework\Http\Pipeline\MiddlewareResolver;
-use Framework\Http\Container\Container;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -15,7 +15,7 @@ final class LazyMiddlewareDecorator implements MiddlewareInterface
 {
     public function __construct(
         private readonly MiddlewareResolver $resolver,
-        private readonly Container $container,
+        private readonly ContainerInterface $container,
         private readonly string $handler
     ) {
     }

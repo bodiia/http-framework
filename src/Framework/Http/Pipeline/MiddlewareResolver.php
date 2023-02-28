@@ -6,13 +6,13 @@ namespace Framework\Http\Pipeline;
 
 use Framework\Http\Middleware\LazyMiddlewareDecorator;
 use Framework\Http\Middleware\RequestHandlerMiddleware;
-use Framework\Http\Container\Container;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 final class MiddlewareResolver
 {
-    public function __construct(private readonly Container $container)
+    public function __construct(private readonly ContainerInterface $container)
     {
     }
 

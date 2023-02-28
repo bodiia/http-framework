@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Framework\Http\Container;
 
-final class Container
-{
-    private array $definitions = [];
+use Psr\Container\ContainerInterface;
 
+final class Container implements ContainerInterface
+{
     private array $resolves = [];
+
+    public function __construct(private array $definitions = [])
+    {
+    }
 
     public function get(string $id): mixed
     {

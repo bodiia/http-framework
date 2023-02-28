@@ -13,14 +13,15 @@ use Psr\Http\Server\RequestHandlerInterface;
 final class Application
 {
     public function __construct(
+        private readonly Pipeline $pipeline,
         private readonly MiddlewareResolver $resolver,
-        private readonly Pipeline $pipeline
+        private readonly RequestHandlerInterface $defaultHandler
     ) {
     }
 
-    public function handleRequest(ServerRequestInterface $request, RequestHandlerInterface $default): ResponseInterface
+    public function handleRequest(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->pipeline->process($request, $default);
+        return $this->pipeline->process($request, $this->defaultHandler);
     }
 
     public function pipe(mixed $handler): self
