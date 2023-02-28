@@ -15,10 +15,12 @@ final class HomeHandler implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return new HtmlResponse(sprintf(
-            'Home | %s | %s',
-            $request->getAttribute(CredentialsMiddleware::ATTRIBUTE),
-            $request->getAttribute(CurrentTimeMiddleware::ATTRIBUTE)
-        ));
+        return new HtmlResponse(
+            sprintf(
+                'Home | %s | %s',
+                $request->getAttribute(CredentialsMiddleware::ATTRIBUTE),
+                $request->getAttribute(CurrentTimeMiddleware::ATTRIBUTE)
+            )
+        );
     }
 }

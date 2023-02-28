@@ -8,9 +8,13 @@ use Psr\Http\Message\ServerRequestInterface;
 
 interface Router
 {
-    /** @throws RouteNotMatchedException */
+    /**
+     * @throws RouteNotMatchedException
+     */
     public function match(ServerRequestInterface $request): Result;
 
-    /** @throws RouteNotFoundException */
+    /**
+     * @throws RouteNotFoundException
+     */
     public function generate(string $name, array $attributes): string;
 }

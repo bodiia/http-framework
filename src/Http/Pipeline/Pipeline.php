@@ -11,7 +11,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class Pipeline implements MiddlewareInterface
 {
-    /** @param MiddlewareInterface[] $middlewares */
+    /**
+     * @param MiddlewareInterface[] $middlewares
+     */
     public function __construct(private array $middlewares = [])
     {
     }

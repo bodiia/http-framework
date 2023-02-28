@@ -15,10 +15,12 @@ final class CatalogHandler implements RequestHandlerInterface
 {
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return new HtmlResponse(sprintf(
-            'Catalog | %s | %s',
-            $request->getAttribute(CredentialsMiddleware::ATTRIBUTE),
-            $request->getAttribute(CurrentTimeMiddleware::ATTRIBUTE)
-        ));
+        return new HtmlResponse(
+            sprintf(
+                'Catalog | %s | %s',
+                $request->getAttribute(CredentialsMiddleware::ATTRIBUTE),
+                $request->getAttribute(CurrentTimeMiddleware::ATTRIBUTE)
+            )
+        );
     }
 }
