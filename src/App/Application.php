@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Framework\App;
+namespace App;
 
 use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Pipeline\Pipeline;

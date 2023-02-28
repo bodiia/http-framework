@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Framework\App\Actions;
+namespace App\Actions;
 
-use Framework\App\Middlewares\CredentialsMiddleware;
-use Framework\App\Middlewares\CurrentTimeMiddleware;
+use App\Middlewares\CredentialsMiddleware;
+use App\Middlewares\CurrentTimeMiddleware;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

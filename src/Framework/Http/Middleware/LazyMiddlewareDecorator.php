@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Framework\Http\Middleware;
 
-use Framework\Http\Container\Container;
 use Framework\Http\Pipeline\MiddlewareResolver;
+use Framework\Http\Container\Container;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;

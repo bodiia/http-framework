@@ -1,10 +1,10 @@
 <?php
 
-use Framework\App\Actions\NotFoundHandler;
-use Framework\App\Application;
-use Framework\App\Middlewares\CredentialsMiddleware;
-use Framework\App\Middlewares\CurrentTimeMiddleware;
-use Framework\App\Middlewares\ErrorHandlerMiddleware;
+use App\Actions\NotFoundHandler;
+use App\Application;
+use App\Middlewares\CredentialsMiddleware;
+use App\Middlewares\CurrentTimeMiddleware;
+use App\Middlewares\ErrorHandlerMiddleware;
 use Framework\Http\Container\Container;
 use Framework\Http\Middleware\DispatchMiddleware;
 use Framework\Http\Middleware\RouteMiddleware;

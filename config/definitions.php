@@ -3,14 +3,14 @@
 declare(strict_types=1);
 
 use Aura\Router\RouterContainer;
-use Framework\App\Application;
+use App\Application;
 use Framework\Http\Container\Container;
 use Framework\Http\Middleware\DispatchMiddleware;
 use Framework\Http\Middleware\RouteMiddleware;
 use Framework\Http\Pipeline\MiddlewareResolver;
-use Framework\Http\Pipeline\Pipeline;
 use Framework\Http\Router\AuraRouterAdapter;
 use Framework\Http\Router\Router;
+use Framework\Http\Pipeline\Pipeline;
 
 $container = new Container();
 $container->set(Application::class, function (Container $container) {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Framework\App\Actions;
+namespace App\Actions;
 
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;

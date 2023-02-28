@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Framework\App\Middlewares;
+namespace App\Middlewares;
 
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
