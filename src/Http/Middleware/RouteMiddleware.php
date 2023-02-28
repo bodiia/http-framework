@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Framework\Http\Middleware;
 
-use Framework\Http\Router\AuraRouterAdapter;
 use Framework\Http\Router\Exceptions\RouteNotMatchedException;
 use Framework\Http\Router\Result;
+use Framework\Http\Router\Router;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -14,7 +14,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class RouteMiddleware implements MiddlewareInterface
 {
-    public function __construct(private readonly AuraRouterAdapter $router)
+    public function __construct(private readonly Router $router)
     {
     }
 

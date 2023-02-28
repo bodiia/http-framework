@@ -16,7 +16,10 @@ final class Container
             return $this->resolves[$id];
         }
 
-        if (array_key_exists($id, $this->definitions)) {
+        if (! array_key_exists($id, $this->definitions)) {
+            if (class_exists($id)) {
+                return new $id();
+            }
             throw new ServiceNotFoundException("Service with id: \"$id\" not found");
         }
 
@@ -35,5 +38,10 @@ final class Container
             unset($this->resolves[$id]);
         }
         $this->definitions[$id] = $value;
+    }
+
+    public function has(string $id): bool
+    {
+        return array_key_exists($id, $this->definitions) || class_exists($id);
     }
 }

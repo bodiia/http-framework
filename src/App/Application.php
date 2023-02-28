@@ -14,7 +14,7 @@ final class Application
 {
     public function __construct(
         private readonly MiddlewareResolver $resolver,
-        private readonly Pipeline $pipeline = new Pipeline()
+        private readonly Pipeline $pipeline
     ) {
     }
 
@@ -23,8 +23,10 @@ final class Application
         return $this->pipeline->process($request, $default);
     }
 
-    public function pipe(mixed $handler): void
+    public function pipe(mixed $handler): self
     {
         $this->pipeline->pipe($this->resolver->resolve($handler));
+
+        return $this;
     }
 }
