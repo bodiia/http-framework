@@ -39,12 +39,8 @@ final class MiddlewareResolver
 
     public function buildPipeline(array $handlers): Pipeline
     {
-        return array_reduce(
-            $handlers,
-            function (Pipeline $pipeline, $handler) {
-                $pipeline->pipe($this->resolve($handler));
-            },
-            new Pipeline()
-        );
+        return array_reduce($handlers, function (Pipeline $pipeline, $handler) {
+            $pipeline->pipe($this->resolve($handler));
+        }, new Pipeline());
     }
 }
