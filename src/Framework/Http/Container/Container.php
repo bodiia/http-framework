@@ -14,6 +14,34 @@ final class Container implements ContainerInterface
     {
     }
 
+    private function resolve(string $id): object
+    {
+        $reflection = new \ReflectionClass($id);
+
+        if (! $reflectionConstructor = $reflection->getConstructor()) {
+            return new $id();
+        }
+
+        $args = [];
+        foreach ($reflectionConstructor->getParameters() as $parameter) {
+            if ($parameter->hasType() && ! $parameter->getType()->isBuiltin()) {
+                $args[$parameter->getName()] = $this->get($parameter->getType()->getName());
+            } elseif ($parameter->isDefaultValueAvailable()) {
+                $args[$parameter->getName()] = $parameter->getDefaultValue();
+            } else {
+                throw new ContainerException(sprintf(
+                    "The class \"%s %s\" cannot be resolved",
+                    $parameter->getType()->getName(),
+                    $parameter->getName()
+                ));
+            }
+        }
+        return $reflection->newInstanceArgs($args);
+    }
+
+    /**
+     * @throws ServiceNotFoundException|ContainerException
+     */
     public function get(string $id): mixed
     {
         if (array_key_exists($id, $this->resolves)) {
@@ -22,24 +50,7 @@ final class Container implements ContainerInterface
 
         if (! array_key_exists($id, $this->definitions)) {
             if (class_exists($id)) {
-                $reflection = new \ReflectionClass($id);
-
-                if ($reflectionConstructor = $reflection->getConstructor()) {
-                    $args = [];
-
-                    foreach ($reflectionConstructor->getParameters() as $parameter) {
-                        if ($parameter->hasType()) {
-                            $args[$parameter->getName()] = $this->get($parameter->getType()->getName());
-                        } elseif ($parameter->isDefaultValueAvailable()) {
-                            $args[$parameter->getName()] = $parameter->getDefaultValue();
-                        } else {
-                            throw new ContainerException("The class \"$id\" cannot be resolved");
-                        }
-                    }
-                    return $reflection->newInstanceArgs($args);
-                } else {
-                    return new $id();
-                }
+                return $this->resolve($id);
             }
             throw new ServiceNotFoundException("Service with id: \"$id\" not found");
         }
