@@ -22,7 +22,24 @@ final class Container implements ContainerInterface
 
         if (! array_key_exists($id, $this->definitions)) {
             if (class_exists($id)) {
-                return new $id();
+                $reflection = new \ReflectionClass($id);
+
+                if ($reflectionConstructor = $reflection->getConstructor()) {
+                    $args = [];
+
+                    foreach ($reflectionConstructor->getParameters() as $parameter) {
+                        if ($parameter->hasType()) {
+                            $args[$parameter->getName()] = $this->get($parameter->getType()->getName());
+                        } elseif ($parameter->isDefaultValueAvailable()) {
+                            $args[$parameter->getName()] = $parameter->getDefaultValue();
+                        } else {
+                            throw new ContainerException("The class \"$id\" cannot be resolved");
+                        }
+                    }
+                    return $reflection->newInstanceArgs($args);
+                } else {
+                    return new $id();
+                }
             }
             throw new ServiceNotFoundException("Service with id: \"$id\" not found");
         }

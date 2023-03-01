@@ -12,6 +12,7 @@ use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Router\AuraRouterAdapterInterface;
 use Framework\Http\Router\RouterInterface;
 use Framework\Http\Pipeline\Pipeline;
+use Psr\Container\ContainerInterface;
 
 return [
     Application::class => function (Container $container) {
@@ -21,14 +22,8 @@ return [
             $container->get(NotFoundHandler::class)
         );
     },
-    MiddlewareResolver::class => function (Container $container) {
-        return new MiddlewareResolver($container);
-    },
-    RouteMiddleware::class => function (Container $container) {
-        return new RouteMiddleware($container->get(RouterInterface::class));
-    },
-    DispatchMiddleware::class => function (Container $container) {
-        return new DispatchMiddleware($container->get(MiddlewareResolver::class));
+    ContainerInterface::class => function (Container $container) {
+        return $container;
     },
     RouterInterface::class => function (Container $container) {
         $aura = new RouterContainer();
