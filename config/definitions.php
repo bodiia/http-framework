@@ -6,8 +6,6 @@ use App\Application;
 use App\Actions\NotFoundHandler;
 use Aura\Router\RouterContainer;
 use Framework\Http\Container\Container;
-use Framework\Http\Middleware\DispatchMiddleware;
-use Framework\Http\Middleware\RouteMiddleware;
 use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Router\AuraRouterAdapterInterface;
 use Framework\Http\Router\RouterInterface;
