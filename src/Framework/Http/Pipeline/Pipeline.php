@@ -38,7 +38,7 @@ final class Pipeline implements MiddlewareInterface
 
             public function handle(ServerRequestInterface $request): ResponseInterface
             {
-                return ($this->process)($request, $this->handler);
+                return call_user_func($this->process, $request, $this->handler);
             }
         };
 
