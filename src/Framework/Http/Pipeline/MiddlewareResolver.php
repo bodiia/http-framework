@@ -37,7 +37,7 @@ final class MiddlewareResolver
         throw new UnknownMiddlewareTypeException();
     }
 
-    public function buildPipeline(array $handlers): Pipeline
+    private function buildPipeline(array $handlers): Pipeline
     {
         return array_reduce($handlers, function (Pipeline $pipeline, $handler) {
             $pipeline->pipe($this->resolve($handler));

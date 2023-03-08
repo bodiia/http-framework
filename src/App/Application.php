@@ -6,6 +6,7 @@ namespace App;
 
 use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Pipeline\Pipeline;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -17,12 +18,13 @@ final class Application
     public function __construct(
         private readonly Pipeline $pipeline,
         private readonly MiddlewareResolver $resolver,
+        private readonly ContainerInterface $container
     ) {
     }
 
-    public function setDefaultHandler(RequestHandlerInterface $handler): void
+    public function setDefaultHandler(string $handler): void
     {
-        $this->handler = $handler;
+        $this->handler = $this->container->get($handler);
     }
 
     public function handleRequest(ServerRequestInterface $request): ResponseInterface
