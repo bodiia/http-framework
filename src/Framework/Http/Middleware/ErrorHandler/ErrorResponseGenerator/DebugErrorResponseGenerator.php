@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Middlewares\ErrorHandler;
+namespace Framework\Http\Middleware\ErrorHandler\ErrorResponseGenerator;
 
+use Framework\Http\Middleware\ErrorHandler\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -15,17 +16,17 @@ final class DebugErrorResponseGenerator implements ErrorResponseGeneratorInterfa
 
     public function generate(\Exception $exception, ServerRequestInterface $request): ResponseInterface
     {
-        $data = [
-            'message' => $exception->getMessage(),
-            'code' => $exception->getCode(),
-            'trace' => $exception->getTrace(),
-        ];
-
         $response = $this->response
             ->withHeader('Content-Type', 'application/json')
             ->withStatus(Utils::getStatusCode($exception));
 
-        $response->getBody()->write(json_encode($data));
+        $response
+            ->getBody()
+            ->write(json_encode([
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+                'trace' => $exception->getTrace(),
+            ]));
 
         return $response;
     }

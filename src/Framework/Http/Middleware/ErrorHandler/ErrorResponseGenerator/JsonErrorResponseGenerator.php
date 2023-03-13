@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Middlewares\ErrorHandler;
+namespace Framework\Http\Middleware\ErrorHandler\ErrorResponseGenerator;
 
+use Framework\Http\Middleware\ErrorHandler\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 final class JsonErrorResponseGenerator implements ErrorResponseGeneratorInterface
 {
-    public function __construct(protected readonly ResponseInterface $response)
+    public function __construct(private readonly ResponseInterface $response)
     {
     }
 
@@ -19,9 +20,9 @@ final class JsonErrorResponseGenerator implements ErrorResponseGeneratorInterfac
             ->withHeader('Content-Type', 'application/json')
             ->withStatus(Utils::getStatusCode($exception));
 
-        $response->getBody()->write(json_encode([
-            'message' => $exception->getMessage(),
-        ]));
+        $response
+            ->getBody()
+            ->write(json_encode(['message' => $exception->getMessage()]));
 
         return $response;
     }

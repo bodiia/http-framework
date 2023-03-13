@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Framework\Http\Container;
+namespace Framework\Container;
 
 use Psr\Container\NotFoundExceptionInterface;
 

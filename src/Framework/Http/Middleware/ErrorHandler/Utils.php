@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Middlewares\ErrorHandler;
+namespace Framework\Http\Middleware\ErrorHandler;
 
 final class Utils
 {
