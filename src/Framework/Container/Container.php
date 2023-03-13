@@ -57,7 +57,11 @@ final class Container implements ContainerInterface
 
         $definition = $this->definitions[$id];
 
-        $this->resolves[$id] = $definition instanceof \Closure
+        if (is_string($definition) && class_exists($definition)) {
+            return $this->resolves[$id] = (new $definition())($this);
+        }
+
+        $this->resolves[$id] = is_callable($definition)
             ? $definition($this)
             : $definition;
 
